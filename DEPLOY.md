@@ -26,7 +26,7 @@ git push origin main
 3. Importa tu repositorio `chatboyfriend` de GitHub
 4. **IMPORTANTE**: Ve a "Environment Variables" y agrega:
    - Nombre: `GEMINI_API_KEY`
-   - Valor: `AIzaSyBLn9FIzkwq8Ia4PyM6WqEKtUDcKsLyyiM`
+   
    - Aplica a: Production, Preview, Development ✅
 5. Haz clic en "Deploy"
 
