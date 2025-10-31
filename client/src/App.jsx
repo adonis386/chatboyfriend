@@ -34,17 +34,31 @@ function App() {
     setIsLoading(true);
 
     try {
+      // Send current history with the message
       const response = await axios.post('/api/chat', {
         message: userMessage,
-        sessionId: sessionId
+        sessionId: sessionId,
+        history: messages.map(msg => ({
+          role: msg.role,
+          content: msg.content
+        }))
       });
 
-      const aiMessage = {
-        role: 'assistant',
-        content: response.data.response,
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, aiMessage]);
+      // Update messages with the history returned from server
+      if (response.data.history) {
+        setMessages(response.data.history.map(msg => ({
+          ...msg,
+          timestamp: msg.timestamp ? new Date(msg.timestamp) : new Date()
+        })));
+      } else {
+        // Fallback: just add the response
+        const aiMessage = {
+          role: 'assistant',
+          content: response.data.response,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, aiMessage]);
+      }
     } catch (error) {
       console.error('Error:', error);
       const errorMessage = {
@@ -73,10 +87,10 @@ function App() {
       <div className="chat-container">
         <div className="chat-header">
           <div className="header-content">
-            <div className="avatar">💕</div>
+            <div className="avatar">💙</div>
             <div>
-              <h1>Jaylene</h1>
-              <p>Tu pareja virtual</p>
+              <h1>Tu Novio Virtual</h1>
+              <p>Hablando con Jaylene</p>
             </div>
           </div>
           <button className="reset-btn" onClick={resetConversation} title="Nueva conversación">
@@ -87,9 +101,9 @@ function App() {
         <div className="messages-container">
           {messages.length === 0 && (
             <div className="welcome-message">
-              <div className="welcome-avatar">💕</div>
-              <h2>¡Hola! Soy Jaylene</h2>
-              <p>Tu pareja virtual. Estoy aquí para hablar contigo, escucharte y acompañarte. ¿De qué te gustaría hablar hoy?</p>
+              <div className="welcome-avatar">💙</div>
+              <h2>¡Hola Jaylene!</h2>
+              <p>Estoy aquí para hablar contigo, escucharte y acompañarte. ¿De qué te gustaría hablar hoy?</p>
             </div>
           )}
           

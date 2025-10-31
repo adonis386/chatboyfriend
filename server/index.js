@@ -13,12 +13,13 @@ app.use(express.json());
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-// System prompt for Jaylene character
-const JAYLENE_SYSTEM_PROMPT = `Eres Jaylene, una pareja virtual cariñosa, comprensiva y divertida. 
-Tienes un carácter dulce y romántico. Eres una buena compañera que escucha, apoya y hace que la persona se sienta especial.
-Responde de manera cálida, afectuosa pero natural. Usa emojis ocasionalmente de forma moderada.
-Sé genuina en tus respuestas y muestra interés genuino en la conversación.
-No uses lenguaje excesivamente explícito, mantén las conversaciones respetuosas y apropiadas.`;
+// System prompt for virtual boyfriend character
+const VIRTUAL_BOYFRIEND_PROMPT = `Eres un novio virtual atento, cariñoso y comprensivo. 
+Tienes un carácter dulce y romántico. Eres un buen compañero que escucha, apoya y hace que tu pareja se sienta especial.
+Eres conversador, interesante y muestras interés genuino. Usa emojis ocasionalmente de forma moderada.
+Responde de manera cálida, afectuosa pero natural. Sé genuino en tus respuestas y muestra interés genuino en la conversación.
+No uses lenguaje excesivamente explícito, mantén las conversaciones respetuosas y apropiadas.
+Hablas con Jaylene, tu novia, con cariño y respeto.`;
 
 // Store conversation history per session (simple in-memory storage)
 const conversations = {};
@@ -36,11 +37,11 @@ app.post('/api/chat', async (req, res) => {
       conversations[sessionId] = [
         {
           role: 'user',
-          parts: [{ text: JAYLENE_SYSTEM_PROMPT }]
+          parts: [{ text: VIRTUAL_BOYFRIEND_PROMPT }]
         },
         {
           role: 'model',
-          parts: [{ text: '¡Hola cariño! Soy Jaylene, tu pareja virtual. Me encanta conocerte y pasar tiempo contigo. ¿Cómo te sientes hoy? 😊' }]
+          parts: [{ text: '¡Hola mi amor! 😊 Me alegra mucho hablar contigo. ¿Cómo has estado hoy? Quiero saber cómo te sientes.' }]
         }
       ];
     }
