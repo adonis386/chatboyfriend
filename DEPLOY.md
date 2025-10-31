@@ -43,7 +43,7 @@ vercel login
 vercel
 
 # Cuando pregunte por variables de entorno:
-# GEMINI_API_KEY = AIzaSyBLn9FIzkwq8Ia4PyM6WqEKtUDcKsLyyiM
+
 ```
 
 ### 4. ¡Listo!
